@@ -1,32 +1,34 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+//connecting to the database
 var connection = mysql.createConnection({
   host: "localhost",
-
-  // Your port; if not 3306
   port: 3306,
-
-  // Your username
   user: "root",
-
-  // Your password
+  // Your password for MySQL goes here
   password: "3ThreeBelieve!",
   database: "bamazon"
 });
 
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("you are connected");
   buyProduct();
 });
 
+//setting global variables for user inputed id and quantity
+var id;
+var quantity;
+var stockQuantity;
+
+//querys the product table for information to be shown to purchaser
 function buyProduct() {
-  connection.query("SELECT id, product_name, price FROM products", function(err, results) {
+  connection.query("SELECT id, product_name, price FROM products", function(err,results) {
     if (err) throw err;
     //console.log(results);
     //  will need to show this!! - find prettier way to show
 
+    // asks what item purchaser wants and quantity
     inquirer
       .prompt([
         {
@@ -41,27 +43,59 @@ function buyProduct() {
         }
       ])
       .then(function(answer) {
-        //console.log(answer);
-         connection.query(`SELECT * FROM products WHERE id = ${answer.id}`, function(err, results) {
-           if (err) throw err;
-          console.log(results);
-          console.log(parseInt(answer.quantity));
-          console.log(results[0].stock_quantity);
+        //query table for the specific id and check the quantity requested against available
+        id = answer.id;
+        connection.query(`SELECT * FROM products WHERE id = ${id}`, function(err,results) {
+          if (err) throw err;
 
-          if(parseInt(answer.quantity) <= results[0].stock_quantity){
-            console.log("we have enough");
+          quantity = answer.quantity;
+          stockQuantity = results[0].stock_quantity;
+
+          if (parseInt(quantity) <= stockQuantity) {
+            console.log("Your order has been placed!");
+            updateStock();
           } else {
-            console.log('we do not have enough');
+            console.log(`\nWe do not have enough of that item in stock to meet your request. 
+            \nWe only have ${stockQuantity} of that item in stock. Please choose a lower quantity or another item.\n`
+            );
+            tryAgainPurchase();
           }
-         });
+        });
       });
   });
+}
 
-  
+//update the stock quantity in database to reflect what was bought
+function updateStock() {
+  connection.query("UPDATE products SET ? WHERE ?" , 
+  [
+    {
+      stock_quantity: stockQuantity - quantity
+    },
+    {
+      id: id
+    }
+  ],
+  function(err,results) {
+    if (err) throw err;
+    //console.log(results.affectedRows + " products updated");
+  });
+}
 
-  
-  //   var query = "SELECT id FROM products";
-  //     connection.query(query, function(err, res) {
-  //
-  //    ;
+//will restart the purchasing process if quantity is too low.
+function tryAgainPurchase() {
+  inquirer
+    .prompt({
+      name: "purchaseOrEnd",
+      type: "list",
+      message: "Would you like to purchase an item?",
+      choices: ["Purchase", "Exit"]
+    })
+    .then(function(answer) {
+      if(answer.purchaseOrEnd === "Purchase"){
+        buyProduct();
+      } else {
+        connection.end();
+      }
+    });
 }
