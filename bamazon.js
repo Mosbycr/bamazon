@@ -25,7 +25,7 @@ var stockQuantity;
 function buyProduct() {
   connection.query("SELECT id, product_name, price FROM products", function(err,results) {
     if (err) throw err;
-    //console.log(results);
+    console.log(results);
     //  will need to show this!! - find prettier way to show
 
     // asks what item purchaser wants and quantity
@@ -52,7 +52,7 @@ function buyProduct() {
           stockQuantity = results[0].stock_quantity;
 
           if (parseInt(quantity) <= stockQuantity) {
-            console.log("Your order has been placed!");
+            console.log('\n\nYour order has been placed!\n\n');
             tryAgainPurchase();
             updateStock();
           } else {
