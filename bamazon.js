@@ -45,7 +45,7 @@ function buyProduct() {
       .then(function(answer) {
         //query table for the specific id and check the quantity requested against available
         id = answer.id;
-        connection.query(`SELECT * FROM products WHERE id = ${id}`, function(err,results) {
+        connection.query(`SELECT id, stock_quantity FROM products WHERE id = ${id}`, function(err,results) {
           if (err) throw err;
 
           quantity = answer.quantity;
@@ -53,6 +53,7 @@ function buyProduct() {
 
           if (parseInt(quantity) <= stockQuantity) {
             console.log("Your order has been placed!");
+            tryAgainPurchase();
             updateStock();
           } else {
             console.log(`\nWe do not have enough of that item in stock to meet your request. 
