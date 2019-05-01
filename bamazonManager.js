@@ -25,9 +25,9 @@ function manageInventory(){
        })
        .then(function(answer) {
          if (answer.manageInventory === "View Products for Sale") {
-           console.log("view");
+           viewProducts();
          } else if (answer.manageInventory === "View Low Inventory"){
-           console.log("low inventory");
+           lowStock();
          } else if (answer.manageInventory === "Add to Inventory"){
             console.log("add inventory");
          } else if (answer.manageInventory === "Add New Product"){
@@ -37,3 +37,24 @@ function manageInventory(){
          }
        });
 }
+
+function viewProducts(){
+  connection.query(
+    "SELECT id, product_name, price, stock_quantity FROM products",
+    function(err, results) {
+      if (err) throw err;
+      console.log(results);
+    }
+  );
+}
+
+function lowStock(){
+ connection.query(
+   "SELECT id, product_name, price, stock_quantity FROM products WHERE stock_quantity <= 5",
+   function(err, results) {
+     if (err) throw err;
+     console.log(results);
+   }
+ );
+}
+
