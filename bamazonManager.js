@@ -106,3 +106,21 @@ function addInventory() {
       );
   });
 }
+
+function createProduct() {
+  //add inquirer here
+  var query = connection.query(
+    "INSERT INTO products SET ?",
+    {
+      flavor: "Rocky Road",
+      price: 3.0,
+      quantity: 50
+    },
+    function(err, results) {
+      console.log(results.affectedRows + " product inserted!\n");
+    }
+  );
+
+  // logs the actual query being run
+  console.log(query.sql);
+}
