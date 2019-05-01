@@ -20,6 +20,7 @@ connection.connect(function(err) {
 var id;
 var quantity;
 var stockQuantity;
+var totalCost;
 
 //querys the product table for information to be shown to purchaser
 function buyProduct() {
@@ -45,15 +46,16 @@ function buyProduct() {
       .then(function(answer) {
         //query table for the specific id and check the quantity requested against available
         id = answer.id;
-        connection.query(`SELECT id, stock_quantity FROM products WHERE id = ${id}`, function(err,results) {
+        connection.query(`SELECT id, price, stock_quantity FROM products WHERE id = ${id}`, function(err,results) {
           if (err) throw err;
 
           quantity = answer.quantity;
           stockQuantity = results[0].stock_quantity;
 
           if (parseInt(quantity) <= stockQuantity) {
-            console.log('\n\nYour order has been placed!\n\n');
-            tryAgainPurchase();
+            console.log('\n\nYour order has been placed!');
+            //calculates total purchase price to be shown after update
+            totalCost = results[0].price * quantity;
             updateStock();
           } else {
             console.log(`\nWe do not have enough of that item in stock to meet your request. 
@@ -79,7 +81,8 @@ function updateStock() {
   ],
   function(err,results) {
     if (err) throw err;
-    //console.log(results.affectedRows + " products updated");
+    console.log(`Your order cost $${totalCost}\n`);
+     tryAgainPurchase();
   });
 }
 
