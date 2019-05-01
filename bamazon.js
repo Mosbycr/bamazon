@@ -25,7 +25,7 @@ var stockQuantity;
 function buyProduct() {
   connection.query("SELECT id, product_name, price FROM products", function(err,results) {
     if (err) throw err;
-    console.log(JSON.stringify(results));
+    console.log(JSON.stringify(results, null, 2));
     //  will need to show this!! - find prettier way to show
 
     // asks what item purchaser wants and quantity

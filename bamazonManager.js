@@ -49,7 +49,7 @@ function viewProducts() {
     "SELECT id, product_name, price, stock_quantity FROM products",
     function(err, results) {
       if (err) throw err;
-      console.log(JSON.stringify(results));
+      console.log(JSON.stringify(results, null, 2));
     }
   );
 }
@@ -59,7 +59,7 @@ function lowInventory() {
     "SELECT id, product_name, price, stock_quantity FROM products WHERE stock_quantity < 5",
     function(err, results) {
       if (err) throw err;
-      console.log(JSON.stringify(results));
+      console.log(JSON.stringify(results, null, 2));
     }
   );
 }
@@ -79,16 +79,12 @@ function addInventory() {
       }
     ])
     .then(function(answer) {
-      //query table for the specific id and check the quantity requested against available
-      //id = answer.id;
+      //query table for the specific id and it's stock quantity
       connection.query(
         `SELECT id, stock_quantity FROM products WHERE id = ${answer.id}`,
         function(err, results) {
           if (err) throw err;
-          console.log(JSON.stringify(results));
-          console.log(results[0].stock_quantity);
-          console.log(
-            results[0].stock_quantity + parseInt(answer.quantity));
+          //ran update after obtaining id specific information
           connection.query(
             `UPDATE products SET ? WHERE ?`,
             [
@@ -99,7 +95,7 @@ function addInventory() {
                 id: answer.id
               }
             ],
-            function(err, results) {
+            function(err) {
               if (err) throw err;
               console.log(
                 `you added ${answer.quantity} item(s) to the inventory`
