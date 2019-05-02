@@ -37,7 +37,7 @@ function manageInventory() {
       } else if (answer.manageInventory === "Add to Inventory") {
         addInventory();
       } else if (answer.manageInventory === "Add New Product") {
-        console.log("add product");
+        createProduct();
       } else {
         connection.end();
       }
@@ -89,7 +89,8 @@ function addInventory() {
             `UPDATE products SET ? WHERE ?`,
             [
               {
-                stock_quantity: results[0].stock_quantity + parseInt(answer.quantity)
+                stock_quantity:
+                  results[0].stock_quantity + parseInt(answer.quantity)
               },
               {
                 id: answer.id
@@ -104,23 +105,46 @@ function addInventory() {
           );
         }
       );
-  });
+    });
 }
 
 function createProduct() {
-  //add inquirer here
-  var query = connection.query(
-    "INSERT INTO products SET ?",
-    {
-      flavor: "Rocky Road",
-      price: 3.0,
-      quantity: 50
-    },
-    function(err, results) {
-      console.log(results.affectedRows + " product inserted!\n");
-    }
-  );
-
-  // logs the actual query being run
-  console.log(query.sql);
+  inquirer
+    .prompt([
+      {
+        name: "productName",
+        type: "input",
+        message: "What is the name of the product?"
+      },
+      {
+        name: "departmentName",
+        type: "input",
+        message: "What is the department the product is sold in?"
+      },
+      {
+        name: "price",
+        type: "input",
+        message: "What is the price of the product?"
+      },
+      {
+        name: "quantity",
+        type: "input",
+        message: "How much stock would you like to add?"
+      }
+    ])
+    .then(function(answer) {
+      connection.query(
+        "INSERT INTO products SET ?",
+        {
+          product_name: answer.productName,
+          department_name: answer.departmentName,
+          price: answer.price,
+          stock_quantity: answer.quantity
+        },
+        function(err, results) {
+          if (err) throw err;
+          console.log(`You have added ${answer.quantity} ${answer.productName}(s) to the ${answer.departmentName} department with a price of ${answer.price} each.`);
+        }
+      );
+    });
 }
