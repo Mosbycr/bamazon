@@ -44,3 +44,27 @@ There are two different applications that can be run:
 
 ![bamazonanotheritem](https://user-images.githubusercontent.com/46547100/57097523-e9f57900-6ce5-11e9-8d84-5494dc926b22.PNG)
 
+## bamazonManager.js
+* To start the application run this code in the terminal: node bamazonManager.js
+* The Manager is then prompted with a list of 5 options:
+ 1. View Products for Sale
+ 2. View Low Inventory
+ 3. Add to Inventory
+ 4. Add New Product
+ 5. Exit
+ 
+ ### View Products for Sale
+ * Managers will be provided with a current list of all products from the MySQL bamazon database with the id, name, price, and stock amounts for viewing.
+ 
+ ### View Low Inventory
+ * Managers will be provide with a current list of all products from the bamazon database that have a stock quantity lower than 5.
+ 
+ ### Add to Inventory
+ * Managers will be prompted for the id of the product they wish to add inventory to and the amount of inventory to be added.
+ * The database will be updated to reflect the new stock amount for that product/item.
+ 
+ ### Add New Product
+ * Managers with be prompted for the new products name, the department it will be sold in, the price, and stock amount. 
+ * The database is then updated to reflect the new product and a message is relayed stating the new products name, department name, price and how much stock was added.
+
+
