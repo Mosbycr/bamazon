@@ -20,6 +20,7 @@ There are two different applications that can be run:
 ![nodeBamazonStart](https://user-images.githubusercontent.com/46547100/57096884-4a83b680-6ce4-11e9-830b-9d5a22ed94e2.PNG)
 
 * Next a current product list from the MySQL database is shown with each items id, name, and price.
+
 ![bamazonproductlist](https://user-images.githubusercontent.com/46547100/57097553-fd084900-6ce5-11e9-935c-bfc4510b0fba.PNG)
 
 * Customers are then prompted for the id of the product they would like to purchase, and how many the wish to order.
@@ -36,4 +37,10 @@ There are two different applications that can be run:
 ![bamazonanotheritem](https://user-images.githubusercontent.com/46547100/57097523-e9f57900-6ce5-11e9-8d84-5494dc926b22.PNG)
 
 * If stock is too low a message will state that there is insufficent stock and how many are available for that item.
+
+![bamazonnotenough](https://user-images.githubusercontent.com/46547100/57097771-96cff600-6ce6-11e9-9e63-c5bb7cafe45a.PNG)
+
 * The customer will then be prompted if they would like to make another purchase or exit.
+
+![bamazonanotheritem](https://user-images.githubusercontent.com/46547100/57097523-e9f57900-6ce5-11e9-8d84-5494dc926b22.PNG)
+
