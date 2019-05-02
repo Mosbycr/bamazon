@@ -20,6 +20,8 @@ There are two different applications that can be run:
 ![nodeBamazonStart](https://user-images.githubusercontent.com/46547100/57096884-4a83b680-6ce4-11e9-830b-9d5a22ed94e2.PNG)
 
 * Next a current product list from the MySQL database is shown with each items id, name, and price.
+![bamazonproductlist](https://user-images.githubusercontent.com/46547100/57097553-fd084900-6ce5-11e9-935c-bfc4510b0fba.PNG)
+
 * Customers are then prompted for the id of the product they would like to purchase, and how many the wish to order.
 
 ![bamazonBuyQuestions](https://user-images.githubusercontent.com/46547100/57096885-4b1c4d00-6ce4-11e9-8c69-ea411c865906.PNG)
@@ -27,9 +29,11 @@ There are two different applications that can be run:
 * The application then checks the amount of stock available in the database compared to the amount requested for order.
 * If there is enough stock customers will recieve a message stating their order was placed.
 * Once an order is placed the database will be updated with the new stock amount and the user will recieve a message stating their total purchase cost.
+
+![bamazonorderandcost](https://user-images.githubusercontent.com/46547100/57097544-f7aafe80-6ce5-11e9-8873-dbf1922bc8e0.PNG)
 * The customer will then be prompted if they would like to make another purchase or exit.
 
-![bamazonOrderandUpdatewithCost](https://user-images.githubusercontent.com/46547100/57096886-4b1c4d00-6ce4-11e9-97d3-61e810a935e4.PNG)
+![bamazonanotheritem](https://user-images.githubusercontent.com/46547100/57097523-e9f57900-6ce5-11e9-8d84-5494dc926b22.PNG)
 
 * If stock is too low a message will state that there is insufficent stock and how many are available for that item.
 * The customer will then be prompted if they would like to make another purchase or exit.
