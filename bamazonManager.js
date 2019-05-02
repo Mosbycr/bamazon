@@ -75,7 +75,7 @@ function addInventory() {
       {
         name: "quantity",
         type: "input",
-        message: "How much stock would you like to add?"
+        message: "How much inventory would you like to add?"
       }
     ])
     .then(function(answer) {
@@ -89,8 +89,7 @@ function addInventory() {
             `UPDATE products SET ? WHERE ?`,
             [
               {
-                stock_quantity:
-                  results[0].stock_quantity + parseInt(answer.quantity)
+                stock_quantity: results[0].stock_quantity + parseInt(answer.quantity)
               },
               {
                 id: answer.id
@@ -98,8 +97,7 @@ function addInventory() {
             ],
             function(err) {
               if (err) throw err;
-              console.log(
-                `you added ${answer.quantity} item(s) to the inventory`
+              console.log(`You added ${answer.quantity} item(s) to the inventory`
               );
             }
           );
@@ -108,6 +106,7 @@ function addInventory() {
     });
 }
 
+//add a new product to database
 function createProduct() {
   inquirer
     .prompt([
